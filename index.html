@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Petek Traduções — Corporativas & Acadêmicas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink:       #2e2e2e;
+      --slate:     #4d4d4d;
+      --blue:      #819fbe;
+      --blue-dark: #637b92;
+      --mist:      #dce8f2;
+      --paper:     #ffffff;
+      --gray:      #6b7280;
+      --light:     #f4f7fa;
+      --border:    #dde5ed;
+      --mono:      'JetBrains Mono', monospace;
+      --sans:      'Outfit', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      height: 68px;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 1px 24px rgba(0,0,0,.07); }
+
+    .nav-logo {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      color: var(--slate);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .875rem; font-weight: 400;
+      color: var(--gray); text-decoration: none;
+      letter-spacing: .03em;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-family: var(--sans); font-size: .875rem; font-weight: 500;
+      letter-spacing: .04em;
+      text-decoration: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all .2s;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--slate);
+      color: #fff;
+      padding: .65rem 1.35rem;
+    }
+    .btn-primary:hover {
+      background: var(--ink);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(77,77,77,.25);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--slate);
+      border: 1.5px solid var(--slate);
+      padding: .6rem 1.3rem;
+    }
+    .btn-outline:hover {
+      background: var(--slate);
+      color: #fff;
+    }
+    .btn-lg {
+      font-size: 1rem;
+      padding: .85rem 1.9rem;
+      border-radius: 8px;
+    }
+
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: .3s; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px clamp(1.5rem, 6vw, 6rem) 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% -10%, rgba(129,159,190,.15) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 80%, rgba(129,159,190,.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      font-family: var(--mono); font-size: .72rem; letter-spacing: .12em;
+      color: var(--blue-dark);
+      border: 1px solid rgba(129,159,190,.45);
+      background: rgba(129,159,190,.07);
+      padding: .35rem .85rem;
+      border-radius: 100px;
+      margin-bottom: 2rem;
+      animation: fadeUp .6s ease both;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--blue-dark);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -.03em;
+      color: var(--ink);
+      max-width: 820px;
+      margin: 0 auto 1.5rem;
+      animation: fadeUp .6s .1s ease both;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--blue-dark);
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 300;
+      color: var(--gray);
+      max-width: 540px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+      animation: fadeUp .6s .2s ease both;
+    }
+
+    .hero-cta {
+      display: flex; align-items: center; justify-content: center; gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp .6s .3s ease both;
+    }
+
+    .hero-footnote {
+      margin-top: 1.5rem;
+      font-family: var(--mono); font-size: .7rem;
+      color: var(--gray); letter-spacing: .08em;
+      animation: fadeUp .6s .4s ease both;
+    }
+
+    .hero-scroll-hint {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: .4rem;
+      font-family: var(--mono); font-size: .65rem; letter-spacing: .1em;
+      color: var(--gray);
+      animation: fadeUp 1s .8s ease both;
+    }
+    .scroll-line {
+      width: 1px; height: 36px;
+      background: linear-gradient(to bottom, var(--border), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+
+    /* ── SECTION SHELL ── */
+    section { padding: 100px clamp(1.5rem, 6vw, 6rem); }
+
+    .section-tag {
+      font-family: var(--mono); font-size: .7rem;
+      letter-spacing: .15em; text-transform: uppercase;
+      color: var(--blue-dark);
+      margin-bottom: .9rem;
+    }
+    .section-heading {
+      font-size: clamp(1.75rem, 3.5vw, 2.6rem);
+      font-weight: 700; letter-spacing: -.03em;
+      color: var(--ink); line-height: 1.15;
+      max-width: 640px;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      font-size: 1.05rem; font-weight: 300;
+      color: var(--gray); line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: var(--light); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2px;
+    }
+    .step {
+      background: var(--paper);
+      padding: 2.5rem;
+      position: relative;
+      transition: box-shadow .25s;
+    }
+    .step:hover { box-shadow: 0 8px 32px rgba(0,0,0,.07); z-index: 1; }
+    .step:first-child { border-radius: 12px 0 0 12px; }
+    .step:last-child  { border-radius: 0 12px 12px 0; }
+
+    .step-num {
+      font-family: var(--mono); font-size: .7rem;
+      letter-spacing: .12em; color: var(--blue-dark);
+      margin-bottom: 1.4rem;
+    }
+    .step-icon {
+      width: 48px; height: 48px;
+      background: var(--mist);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.4rem;
+    }
+    .step-icon svg { width: 22px; height: 22px; stroke: var(--blue-dark); fill: none; stroke-width: 1.8; }
+    .step h3 {
+      font-size: 1.1rem; font-weight: 600;
+      letter-spacing: -.02em;
+      color: var(--ink); margin-bottom: .65rem;
+    }
+    .step p {
+      font-size: .92rem; font-weight: 300;
+      color: var(--gray); line-height: 1.7;
+    }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .service-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      transition: all .25s;
+    }
+    .service-card:hover {
+      border-color: var(--blue);
+      box-shadow: 0 6px 24px rgba(129,159,190,.18);
+      transform: translateY(-3px);
+    }
+    .service-card h3 {
+      font-size: 1rem; font-weight: 600;
+      letter-spacing: -.01em;
+      color: var(--ink); margin-bottom: .6rem;
+    }
+    .service-card p {
+      font-size: .875rem; font-weight: 300;
+      color: var(--gray); line-height: 1.65;
+    }
+    .service-tag {
+      display: inline-block;
+      font-family: var(--mono); font-size: .62rem;
+      letter-spacing: .08em;
+      background: var(--mist); color: var(--blue-dark);
+      padding: .2rem .55rem; border-radius: 4px;
+      margin-bottom: 1rem;
+    }
+
+    /* ── PRICING ── */
+    .pricing { background: var(--slate); color: #fff; }
+    .pricing .section-tag { color: var(--blue); }
+    .pricing .section-heading { color: #fff; max-width: 100%; }
+    .pricing .section-sub { color: rgba(255,255,255,.55); max-width: 100%; margin-bottom: 0; }
+
+    /* ── GUARANTEES ── */
+    .guarantees {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .guarantee {
+      display: flex; align-items: flex-start; gap: .9rem;
+    }
+    .guarantee-icon {
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      background: rgba(129,159,190,.15);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .guarantee-icon svg { width: 16px; height: 16px; stroke: var(--blue); fill: none; stroke-width: 2; }
+    .guarantee h4 {
+      font-size: .875rem; font-weight: 500; color: #fff;
+      margin-bottom: .25rem;
+    }
+    .guarantee p { font-size: .8rem; font-weight: 300; color: rgba(255,255,255,.45); line-height: 1.5; }
+
+    /* ── FINAL CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 120px clamp(1.5rem, 6vw, 6rem);
+      background:
+        radial-gradient(ellipse 60% 60% at 50% 50%, rgba(129,159,190,.1) 0%, transparent 70%);
+    }
+    .cta-section .section-tag { text-align: center; display: block; }
+    .cta-section .section-heading { margin: 0 auto 1rem; text-align: center; }
+    .cta-section .section-sub { margin: 0 auto 2.5rem; text-align: center; }
+    .cta-section .btn-lg { font-size: 1.05rem; }
+
+    .cta-note {
+      margin-top: 1.25rem;
+      font-family: var(--mono); font-size: .68rem;
+      letter-spacing: .1em; color: var(--gray);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem clamp(1.5rem, 5vw, 4rem);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo {
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      color: var(--slate);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+    .footer-links {
+      display: flex; align-items: center; gap: 2rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: .8rem; color: var(--gray);
+      text-decoration: none; letter-spacing: .03em;
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--ink); }
+    .footer-copy {
+      font-family: var(--mono); font-size: .68rem;
+      letter-spacing: .06em; color: var(--gray);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: .3; }
+      50%       { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .step:first-child { border-radius: 12px 12px 0 0; }
+      .step:last-child  { border-radius: 0 0 12px 12px; }
+      .steps { gap: 1px; grid-template-columns: 1fr; }
+
+      .hero h1 { font-size: 2.4rem; }
+      .hero-cta { flex-direction: column; align-items: stretch; }
+      .hero-cta .btn { justify-content: center; }
+
+      footer { flex-direction: column; align-items: flex-start; }
+      .footer-links { flex-wrap: wrap; gap: 1rem; }
+    }
+
+    /* WhatsApp icon */
+    .wa-icon { width: 18px; height: 18px; fill: currentColor; }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="navbar">
+  <a class="nav-logo" href="#">
+    PETEK TRADUÇÕES
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#como-funciona">Como funciona</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#precos">Planos</a></li>
+    <li>
+      <a class="btn btn-primary"
+         href="https://wa.me/5551995111992?text=Ol%C3%A1%20Petek%20Tradu%C3%A7%C3%B5es!"
+         target="_blank" rel="noopener">
+        <svg class="wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar no WhatsApp
+      </a>
+    </li>
+  </ul>
+  <div class="nav-hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-badge">Traduções corporativas &amp; acadêmicas</div>
+  <h1>Precisão que atravessa<br /><em>fronteiras linguísticas</em></h1>
+  <p>Traduções certificadas e revisadas por especialistas. Do contrato ao artigo científico — com rigor técnico e entrega pontual.</p>
+  <div class="hero-cta">
+    <a class="btn btn-primary btn-lg"
+       href="https://wa.me/5551995111992?text=Ol%C3%A1%20Petek%20Tradu%C3%A7%C3%B5es!"
+       target="_blank" rel="noopener">
+      <svg class="wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Solicitar orçamento grátis
+    </a>
+    <a class="btn btn-outline btn-lg" href="#como-funciona">Como funciona</a>
+  </div>
+  <p class="hero-footnote">// resposta em até 2h · orçamento sem compromisso</p>
+  <div class="hero-scroll-hint">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══ COMO FUNCIONA ══ -->
+<section class="how" id="como-funciona">
+  <div class="section-tag">// processo</div>
+  <h2 class="section-heading reveal">Simples, rápido e sem complicação</h2>
+  <p class="section-sub reveal">Três passos para ter seu documento traduzido com qualidade e segurança.</p>
+  <div class="steps reveal">
+    <div class="step">
+      <div class="step-num">01 — ENVIO</div>
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
+        </svg>
+      </div>
+      <h3>Envie seu documento</h3>
+      <p>Mande o arquivo pelo WhatsApp ou e-mail. Aceitamos PDF, Word, imagens ou qualquer formato. Analisamos e retornamos o orçamento em até 2 horas.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02 — PRODUÇÃO</div>
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
+        </svg>
+      </div>
+      <h3>Tradução especializada</h3>
+      <p>Tradutores especializados na área do seu documento. Revisão em duas etapas para garantir fidelidade terminológica e fluência.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03 — ENTREGA</div>
+      <div class="step-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h3>Entrega no prazo</h3>
+      <p>Arquivo final formatado, pronto para uso e com certificado de tradução. Prazo cumprido. Suporte pós-entrega incluso.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVIÇOS ══ -->
+<section id="servicos">
+  <div class="section-tag">// especialidades</div>
+  <h2 class="section-heading reveal">Para cada demanda,<br/>o especialista certo</h2>
+  <p class="section-sub reveal">Atuamos em segmentos que exigem precisão técnica e domínio contextual — não apenas fluência linguística.</p>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-tag">JURÍDICO</div>
+      <h3>Documentos Jurídicos</h3>
+      <p>Contratos, procurações, apostilamentos, laudos, sentenças e documentos notariais. Terminologia exata, reconhecida internacionalmente.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-tag">ACADÊMICO</div>
+      <h3>Textos Acadêmicos</h3>
+      <p>Artigos científicos, teses, dissertações, resumos e abstracts. Adequação às normas ABNT ou Vancouver.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-tag">CORPORATIVO</div>
+      <h3>Comunicação Empresarial</h3>
+      <p>Apresentações, relatórios, manuais técnicos, materiais de marketing e correspondências formais para mercado global.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-tag">TÉCNICO</div>
+      <h3>Documentação Técnica</h3>
+      <p>Manuais de produtos, especificações de engenharia, patentes e documentação de software. Precisão em cada termo.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-tag">MÉDICO</div>
+      <h3>Área da Saúde</h3>
+      <p>Prontuários, bulas, laudos clínicos e estudos científicos. Tradutores com background em ciências da saúde.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-tag">FINANCEIRO</div>
+      <h3>Documentos Financeiros</h3>
+      <p>Balanços, prospectos, due diligence e relatórios de auditoria. Conformidade com padrões IFRS e regulatórios.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRICING ══ -->
+<section class="pricing" id="precos">
+  <div class="section-tag">// planos</div>
+  <h2 class="section-heading reveal">Transparência em cada etapa</h2>
+  <p class="section-sub reveal">Preços calculados por palavra ou por projeto. Orçamento detalhado antes de qualquer compromisso.</p>
+
+  <div class="guarantees reveal">
+    <div class="guarantee">
+      <div class="guarantee-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div>
+        <h4>Confidencialidade total</h4>
+        <p>Seus documentos protegidos por acordo de sigilo.</p>
+      </div>
+    </div>
+    <div class="guarantee">
+      <div class="guarantee-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <div>
+        <h4>Prazo garantido</h4>
+        <p>Entrega no prazo acordado.</p>
+      </div>
+    </div>
+    <div class="guarantee">
+      <div class="guarantee-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div>
+        <h4>Revisão gratuita</h4>
+        <p>Ajustes inclusos se o texto não atender às expectativas.</p>
+      </div>
+    </div>
+    <div class="guarantee">
+      <div class="guarantee-icon">
+        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <div>
+        <h4>Tradutores especializados</h4>
+        <p>Profissionais com formação na área do documento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FINAL CTA ══ -->
+<section class="cta-section">
+  <span class="section-tag">// próximo passo</span>
+  <h2 class="section-heading reveal">Pronto para começar?</h2>
+  <p class="section-sub reveal">Envie seu documento agora e receba um orçamento detalhado em até 2 horas. Sem compromisso.</p>
+  <a class="btn btn-primary btn-lg reveal"
+     href="https://wa.me/5551995111992?text=Ol%C3%A1%20Petek%20Tradu%C3%A7%C3%B5es!"
+     target="_blank" rel="noopener">
+    <svg class="wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Falar com especialista agora
+  </a>
+  <p class="cta-note">// segunda a sexta, 8h–18h · resposta em até 2h</p>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <a class="footer-logo" href="#">PETEK TRADUÇÕES</a>
+  <ul class="footer-links">
+    <li><a href="https://wa.me/5551995111992?text=Ol%C3%A1%20Petek%20Tradu%C3%A7%C3%B5es!" target="_blank" rel="noopener">Contato</a></li>
+    <li><a href="#">Política de Privacidade</a></li>
+    <li><a href="#">Termos de Uso</a></li>
+    <li><a href="#">Política de Sigilo</a></li>
+  </ul>
+  <span class="footer-copy">© 2025 Petek Traduções</span>
+</footer>
+
+<script>
+  var nav = document.getElementById('navbar');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  });
+  var reveals = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(function(el) { io.observe(el); });
+</script>
+</body>
+</html>
